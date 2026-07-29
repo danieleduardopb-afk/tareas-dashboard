@@ -1,4 +1,40 @@
 {
-  "generated_at": null,
-  "tasks": []
+  "generated_at": "2026-07-29T13:43:01.057646+00:00",
+  "tasks": [
+    {
+      "nombre": "Validación y Arquitectura Geoportal Server",
+      "categoria": "Personal",
+      "prioridad": "Medio ⏳",
+      "estado": "En curso",
+      "fecha_vencimiento": "2026-08-28"
+    },
+    {
+      "nombre": "Diseñar bajada de Power BI-Autodesk-AGOL",
+      "categoria": "Formación",
+      "prioridad": "Medio ⏳",
+      "estado": "En curso",
+      "fecha_vencimiento": "2025-08-15"
+    },
+    {
+      "nombre": "Correo Lo Espejo-HH",
+      "categoria": "Trabajo",
+      "prioridad": "Medio ⏳",
+      "estado": "En curso",
+      "fecha_vencimiento": "2026-07-31"
+    },
+    {
+      "nombre": "Apoyo profesional Geógrafo Providencia ",
+      "categoria": "Apoyo Clientes",
+      "prioridad": "Bajo 💤",
+      "estado": "En curso",
+      "fecha_vencimiento": "2026-08-14"
+    },
+    {
+      "nombre": "Migración ArcMap a ArcGIS Pro GORE Atacama",
+      "categoria": "Trabajo",
+      "prioridad": "Bajo 💤",
+      "estado": "Realizado",
+      "fecha_vencimiento": "2025-07-09"
+    }
+  ]
 }
