@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Dashboard de Tareas</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.4/chart.umd.min.js"></script>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: 24px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    background: #ffffff;
+    color: #37352f;
+  }
+  h1 {
+    font-size: 20px;
+    margin: 0 0 4px 0;
+  }
+  .updated {
+    font-size: 12px;
+    color: #9b9a97;
+    margin-bottom: 24px;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+  }
+  .card {
+    border: 1px solid #e9e9e7;
+    border-radius: 10px;
+    padding: 16px;
+  }
+  .card h2 {
+    font-size: 14px;
+    margin: 0 0 12px 0;
+    color: #6b6a67;
+    font-weight: 600;
+  }
+  .empty {
+    font-size: 13px;
+    color: #9b9a97;
+    text-align: center;
+    padding: 40px 0;
+  }
+  canvas { max-height: 280px; }
+</style>
+</head>
+<body>
+
+<h1>📊 Dashboard de Tareas</h1>
+<div class="updated" id="updated">Cargando datos...</div>
+
+<div class="grid">
+  <div class="card">
+    <h2>Carga por Categoría</h2>
+    <canvas id="chartCategoria"></canvas>
+  </div>
+  <div class="card">
+    <h2>Carga por Prioridad</h2>
+    <canvas id="chartPrioridad"></canvas>
+  </div>
+  <div class="card">
+    <h2>Tareas por Estado</h2>
+    <canvas id="chartEstado"></canvas>
+  </div>
+</div>
+
+<script>
+const COLORS = {
+  categoria: ['#5B8FF9', '#9270CA', '#5AD8A6', '#B0B0B0'],
+  prioridad: ['#E8684A', '#F6BD16', '#5B8FF9'],
+  estado: ['#B0B0B0', '#F6BD16', '#5AD8A6']
+};
+
+function countBy(items, key) {
+  const counts = {};
+  items.forEach(item => {
+    const value = item[key] || 'Sin definir';
+    counts[value] = (counts[value] || 0) + 1;
+  });
+  return counts;
+}
+
+function renderBarChart(canvasId, counts, colors) {
+  const labels = Object.keys(counts);
+  const data = Object.values(counts);
+  new Chart(document.getElementById(canvasId), {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [{
+        data,
+        backgroundColor: colors,
+        borderRadius: 6,
+        maxBarThickness: 48
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: { legend: { display: false } },
+      scales: {
+        y: { beginAtZero: true, ticks: { precision: 0 } }
+      }
+    }
+  });
+}
+
+function renderDonutChart(canvasId, counts, colors) {
+  const labels = Object.keys(counts);
+  const data = Object.values(counts);
+  new Chart(document.getElementById(canvasId), {
+    type: 'doughnut',
+    data: {
+      labels,
+      datasets: [{ data, backgroundColor: colors }]
+    },
+    options: {
+      responsive: true,
+      plugins: { legend: { position: 'bottom' } }
+    }
+  });
+}
+
+fetch('./data.json?_=' + Date.now())
+  .then(res => res.json())
+  .then(payload => {
+    const tasks = payload.tasks || [];
+    const updatedEl = document.getElementById('updated');
+
+    if (tasks.length === 0) {
+      updatedEl.textContent = 'No hay tareas para mostrar todavía.';
+      return;
+    }
+
+    const generatedAt = payload.generated_at
+      ? new Date(payload.generated_at).toLocaleString('es-CL')
+      : 'desconocida';
+    updatedEl.textContent = `Última actualización: ${generatedAt} · ${tasks.length} tareas`;
+
+    renderBarChart('chartCategoria', countBy(tasks, 'categoria'), COLORS.categoria);
+    renderBarChart('chartPrioridad', countBy(tasks, 'prioridad'), COLORS.prioridad);
+    renderDonutChart('chartEstado', countBy(tasks, 'estado'), COLORS.estado);
+  })
+  .catch(err => {
+    document.getElementById('updated').textContent =
+      'No se pudo cargar data.json todavía (aún no corre el primer Action, o revisa la consola).';
+    console.error(err);
+  });
+</script>
+
+</body>
+</html>
