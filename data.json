@@ -1,12 +1,26 @@
 {
-  "generated_at": "2026-07-29T18:01:02.644065+00:00",
+  "generated_at": "2026-07-29T22:32:21.721735+00:00",
   "tasks": [
     {
-      "nombre": "",
-      "categoria": null,
-      "prioridad": null,
-      "estado": null,
-      "fecha_vencimiento": null
+      "nombre": "Presentación con Conaf",
+      "categoria": "Trabajo",
+      "prioridad": "Bajo 💤",
+      "estado": "En curso",
+      "fecha_vencimiento": "2026-08-19"
+    },
+    {
+      "nombre": "Uso de Experiencie Builder -Administración organización y administración grupos Vitacura ",
+      "categoria": "Apoyo Clientes",
+      "prioridad": "Bajo 💤",
+      "estado": "En curso",
+      "fecha_vencimiento": "2026-08-14"
+    },
+    {
+      "nombre": "Bussiness analyst Vitacura ",
+      "categoria": "Apoyo Clientes",
+      "prioridad": "Medio ⏳",
+      "estado": "En curso",
+      "fecha_vencimiento": "2026-08-15"
     },
     {
       "nombre": "Validación y Arquitectura Geoportal Server",
@@ -26,7 +40,7 @@
       "nombre": "Correo Lo Espejo-HH",
       "categoria": "Trabajo",
       "prioridad": "Medio ⏳",
-      "estado": "En curso",
+      "estado": "Realizado",
       "fecha_vencimiento": "2026-07-31"
     },
     {
