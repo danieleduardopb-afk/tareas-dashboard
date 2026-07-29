@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Dashboard de Tareas</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.4/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
 <style>
   * { box-sizing: border-box; }
   body {
@@ -49,10 +49,8 @@
 </style>
 </head>
 <body>
-
 <h1>📊 Dashboard de Tareas</h1>
 <div class="updated" id="updated">Cargando datos...</div>
-
 <div class="grid">
   <div class="card">
     <h2>Carga por Categoría</h2>
@@ -67,14 +65,12 @@
     <canvas id="chartEstado"></canvas>
   </div>
 </div>
-
 <script>
 const COLORS = {
   categoria: ['#5B8FF9', '#9270CA', '#5AD8A6', '#B0B0B0'],
   prioridad: ['#E8684A', '#F6BD16', '#5B8FF9'],
   estado: ['#B0B0B0', '#F6BD16', '#5AD8A6']
 };
-
 function countBy(items, key) {
   const counts = {};
   items.forEach(item => {
@@ -83,7 +79,6 @@ function countBy(items, key) {
   });
   return counts;
 }
-
 function renderBarChart(canvasId, counts, colors) {
   const labels = Object.keys(counts);
   const data = Object.values(counts);
@@ -107,7 +102,6 @@ function renderBarChart(canvasId, counts, colors) {
     }
   });
 }
-
 function renderDonutChart(canvasId, counts, colors) {
   const labels = Object.keys(counts);
   const data = Object.values(counts);
@@ -123,23 +117,19 @@ function renderDonutChart(canvasId, counts, colors) {
     }
   });
 }
-
 fetch('./data.json?_=' + Date.now())
   .then(res => res.json())
   .then(payload => {
     const tasks = payload.tasks || [];
     const updatedEl = document.getElementById('updated');
-
     if (tasks.length === 0) {
       updatedEl.textContent = 'No hay tareas para mostrar todavía.';
       return;
     }
-
     const generatedAt = payload.generated_at
       ? new Date(payload.generated_at).toLocaleString('es-CL')
       : 'desconocida';
     updatedEl.textContent = `Última actualización: ${generatedAt} · ${tasks.length} tareas`;
-
     renderBarChart('chartCategoria', countBy(tasks, 'categoria'), COLORS.categoria);
     renderBarChart('chartPrioridad', countBy(tasks, 'prioridad'), COLORS.prioridad);
     renderDonutChart('chartEstado', countBy(tasks, 'estado'), COLORS.estado);
@@ -150,6 +140,5 @@ fetch('./data.json?_=' + Date.now())
     console.error(err);
   });
 </script>
-
 </body>
 </html>
